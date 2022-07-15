@@ -1,0 +1,6 @@
+*.tfstate
+tf-plan.json
+tfplan.binary
+terraform.tfstate.backup
+/.terraform/*
+.terraform.lock.hcl
