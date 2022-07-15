@@ -8,7 +8,7 @@ This repository contains:
 * env_1 - Terraform code to spin up AWS S3 Bucket
 * env_1_custom_rules_fixed - Terraform code to spin up AWS S3 Bucket with resource tagging 
 * env_2 - Terraform code to spin up AWS VPC (this is just to show that Snyk IaC can scan multiple tfstate files)
-* iac_custom_rules - Contains custom rules bundles
+* iac_custom_rules - Contains custom rules bundle and Rego rules
 
 ## Demo #1 - Scanning of Terraform code (static) and Terraform plan
 
