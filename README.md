@@ -4,11 +4,11 @@
 * Snyk IaC scan of Terraform code (static) and Terraform plan
 * Drift detection
 
-This repository contains Terraform codes to spin up both AWS S3 bucket and VPC services:
-* env_1 - AWS S3 Bucket
-* env_1_custom_rules_fixed
-* env_2 - AWS VPC (this is just to show that Snyk IaC can scan multiple tfstate files)
-* iac_custom_rules - Snyk IaC custom rules
+This repository contains:
+* env_1 - Terraform code to spin up AWS S3 Bucket
+* env_1_custom_rules_fixed - Terraform code to spin up AWS S3 Bucket with resource tagging 
+* env_2 - Terraform code to spin up AWS VPC (this is just to show that Snyk IaC can scan multiple tfstate files)
+* iac_custom_rules - Contains custom rules bundles
 
 ## Demo #1 - Scanning of Terraform code (static) and Terraform plan
 
