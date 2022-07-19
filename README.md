@@ -51,7 +51,7 @@ Now, create a Terraform plan file by doing the follow:
 ➜ terraform show -json tfplan.binary > tf-plan.json
 ```
 
-Scanning of the created Terraform Plan would show the ACL variable (public_read_write:
+Scanning of the created Terraform Plan would show the ACL variable (public_read_write):
 ```
 ➜ snyk iac test tf-plan.json --scan=planned-values
 
