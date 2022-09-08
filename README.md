@@ -143,15 +143,15 @@ resource "aws_s3_bucket" "jj-s3-demo"{
 ## Demo #3 - Drift detection
 1. Provision the AWS S3 Bucket service in env_1. Note that my region is in 'ap-southeast-1'.
 
-2. Head over to your AWS console and manually create another S3 Bucket, I named it jj-terraform-s3-goof-bucket-manual in my case.
+2. Head over to your AWS console and add a new tag to the jj-terraform-s3-goof-bucket e.g owner=jj
 
-3. Run the following command to see the managed resource:
+3. Run the following command to detect the drift in configurations:
 
 ```
-❯ snyk iac describe --only-managed --filter=Attr.region==\'ap-southeast-1\' --from="tfstate://env_1/terraform.tfstate"
+snyk iac describe --only-managed
 Scanned states (1)
-Scan duration: 3m59s
-Provider version used to scan: 3.19.0. Use --tf-provider-version to use another version.
+Scan duration: 2m43s
+Provider version used to scan: 4.24.0. Use --tf-provider-version to use another version.
 Snyk Scanning Infrastructure As Code Discrepancies...
 
   Info:    Resources under IaC, but different to terraform states.
@@ -159,12 +159,12 @@ Snyk Scanning Infrastructure As Code Discrepancies...
 
 Changed resources: 1
 
-State: tfstate://env_1/terraform.tfstate [ Changed Resources: 1 ]
+State: tfstate://terraform.tfstate [ Changed Resources: 1 ]
 
   Resource Type: aws_s3_bucket
     ID: jj-terraform-s3-goof-bucket
-    - grant: [{"id":"","permissions":["READ","WRITE"],"type":"Group","uri":"http://acs.amazonaws.com/groups/global/AllUsers"},{"id":"148u6564srt767465465e","permissions":["FULL_CONTROL"],"type":"CanonicalUser","uri":""}]
-    - policy:
+    - grant: [{"id":"","permissions":["READ","WRITE"],"type":"Group","uri":"http://acs.amazonaws.com/groups/global/AllUsers"},{"id":"14885a40519d92132132132143242543trret435","permissions":["FULL_CONTROL"],"type":"CanonicalUser","uri":""}]
+    + tags: null => {"owner":"jj"}
 
 Test Summary
 
@@ -175,41 +175,7 @@ Test Summary
   Info: To reach full coverage, remove resources or move it to Terraform.
 
   Tip: Run --help to find out about commands and flags.
-      Scanned with aws provider version 3.19.0. Use --tf-provider-version to update.
+      Scanned with aws provider version 4.24.0. Use --tf-provider-version to update.
 ```
 
-5. Run the drift detection command:
-
-```
-❯ snyk iac describe --all --filter=Attr.region==\'ap-southeast-1\' --from="tfstate://env_1/terraform.tfstate"
-Scanned states (1)
-Scan duration: 1m31s
-Provider version used to scan: 3.19.0. Use --tf-provider-version to use another version.
-Snyk Scanning Infrastructure As Code Discrepancies...
-
-  Info:    Resources under IaC, but different to terraform states.
-  Resolve: Reapply IaC resources or update into terraform.
-
-Unmanaged resources: 3
-
-Service: aws_s3 [ Unmanaged Resources: 3 ]
-
-  Resource Type: aws_s3_bucket
-    ID: codepipeline-ap-southeast-1-546026096552
-    ID: jj-terraform-s3-goof-bucket-manual
-
-  Resource Type: aws_s3_bucket_policy
-    ID: codepipeline-ap-southeast-1-546026096552
-
-Test Summary
-
-  Managed Resources: 1
-  Unmanaged Resources: 3
-
-  IaC Coverage: 25%
-  Info: To reach full coverage, remove resources or move it to Terraform.
-
-  Tip: Run --help to find out about commands and flags.
-      Scanned with aws provider version 3.19.0. Use --tf-provider-version to update.
-```
-you will see that it detects the unmanaged resources by comparing with the tfstate file.
+you will see that it detects the managed resources by comparing with the tfstate file.
